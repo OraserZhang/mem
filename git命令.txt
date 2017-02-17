@@ -111,6 +111,7 @@ git config --global push.default matching	默认推送所有与远程分支关联的分支
 git config --list	查看配置
 git config --global --list	查看全局配置
 
+
 git config --global credential.helper store	只需要输入一次密码
 
 git config --global user.name “XXXXX”
