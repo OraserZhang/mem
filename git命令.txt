@@ -1,0 +1,123 @@
+
+Windows下 Git配置SSH访问GitHub
+(1)cd ~/.ssh 或cd .ssh    检查本机是否有ssh key设置
+(2)使用Git Bash生成新的ssh key。
+$ cd ~  #保证当前路径在”~”下
+$ ssh-keygen -t rsa -C "xxxxxx@yy.com"  #建议填写自己真实有效的邮箱地址,生成新的ssh key
+存放路径为：c:/Users/xxxx_000/.ssh/下
+(3)添加ssh key到GItHub
+(4)测试ssh keys是否设置成功
+ssh -T git@github.com
+
+将本地项目通过SSH push到GitHub
+本地创建项目 
+1) 创建目录
+$ mkdir test
+$ cd test
+2) 初始化
+$ git init
+3) 创建hello.md文件
+$ echo "this is a test ssh key" > hello.md
+4) 提交到本地
+$ git add hello.md   #提交当前目录下指定文件（$ git add .#提交当前目录下所有文件）
+$ git commit -m "add hello.md"   #提交记录说明 
+5) 提交到github
+$ git remote add origin ‘粘贴复制test ssh key的ssh路径’  
+$ git push -u origin master    第一次推送需要加-u
+加上-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令，之后不用。
+用户名：big-thinker
+
+git remote add origin git@server-name:path/repo-name.git  关联到一个远程库
+
+git checkout -b dev  创建dev分支，然后切换到dev分支
+-b参数表示创建并切换 相当于以下两条命令：
+$ git branch dev
+$ git checkout dev
+
+
+git merge  命令用于合并指定分支到当前分支。
+git checkout master 切换分支
+git merge dev   把dev分支的工作成果合并到master分支上
+git branch -d dev  删除dev分支
+
+git branch 列出所有分支，当前分支前面会标一个*
+
+git init	除了版本库 还带有一份源代码
+git init --bare	只生成版本库
+touch read.txt 生成文件
+echo "# git skills" >> readme.md   向文件中写入数据
+
+cat read.txt   打开文件
+rm test.txt 删除文件
+git rm file 从版本库中删除该文件
+git checkout -- test.txt 用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+Shell（Windows下打开Git Bash），创建SSH Key：
+$ ssh-keygen -t rsa -C "youremail@example.com"
+
+
+
+
+Git鼓励大量使用分支：
+
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
+
+git log --graph --pretty=oneline --abbrev-commit 查看分支合并情况
+git log --graph 查看分支合并图
+
+只有一条时间线，在Git里，这个分支叫主分支，即master分支。HEAD严格来说不是指向提交，而是指向master，master才是指向提交的，所以，HEAD指向的就是当前分支。
+
+
+
+git status
+git add
+git commit -m "XXXX"
+git push
+git pull
+git log
+git log --pretty=oneline  
+git reset --hard HEAD^ 回退到上一个版本
+git reset --hard HEAD^^回退到上上一个版本
+
+git checkout -- file  可以丢弃工作区的修改
+git reset HEAD file  可以把暂存区的修改撤销掉（unstage），重新放回工作区
+小结：
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+HEAD 表示最新的版本
+git relog
+
+
+git stash	暂存工作区内容到栈缓存区
+git stash pop	从栈缓存区提取一份内容到工作区
+git stash list	查看栈缓存区内容
+git stash clear	清空栈缓存区
+
+
+git push origin 本地分支:远程分支
+git pull origin 远程分支:本地分支
+
+git --set-upstream-to=origin/远程分支 本地分支	关联远程分支
+
+
+git config --global push.default simple	默认只推送当前分支
+git config --global push.default matching	默认推送所有与远程分支关联的分支
+
+git config --list	查看配置
+git config --global --list	查看全局配置
+
+git config --global credential.helper store	只需要输入一次密码
+
+git config --global user.name “XXXXX”
+git config --global user.email “XXXXX”
+git config --global user.password “XXXXX”
+
+
+set GIT_SSL_NO_VERIFY=true git clone	解决当次SSL证书问题
+git config --global http.sslVerify false	全局解决SSL证书问题
+git config --global core.quotepath false  解决中文显示为编码问题
